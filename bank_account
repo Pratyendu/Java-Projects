@@ -1,0 +1,76 @@
+import java.io.*;
+import java.util.*;
+
+class BankAccount {
+    private String accNo ;
+    private String name ;
+    private int balance ;
+    
+    BankAccount(String accNo , String name){
+        this.accNo = accNo ;
+        this.name = name ;
+        this.balance = 0 ;
+    }
+    
+    void deposit(int amount){
+        this.balance += amount;
+    }
+    
+    boolean withdraw(int amount){
+        if(this.balance < amount) return false;
+        this.balance -= amount;
+        return true;
+    }
+    
+    void balance(){
+        System.out.println(this.name + " " + this.balance);
+    }
+    
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        HashMap <String , BankAccount> accounts = new HashMap<>();
+        
+        while(true){
+            String input  = scn.nextLine();
+            String[]tokens = input.split(" ");
+            String command = tokens[0];
+            
+            if(command.equals("CREATE") == true){
+              //create 
+                
+                BankAccount acc = new BankAccount(tokens[1] , tokens[2]);
+                accounts.put(tokens[1] , acc);
+                
+            }else if(command.equals("DEPOSIT") == true){
+              //deposit 
+                
+                int amount = Integer.parseInt(tokens[2]);
+                BankAccount acc = accounts.get(tokens[1]);
+                acc.deposit(amount);
+                
+                
+                
+            }else if(command.equals("WITHDRAW") == true){
+              // withdraw
+                
+                int amount = Integer.parseInt(tokens[2]);
+                BankAccount acc = accounts.get(tokens[1]);
+                acc.withdraw(amount);
+                
+            }else if(command.equals("BALANCE") == true){
+              // balance  
+                
+                BankAccount acc = accounts.get(tokens[1]);
+                acc.balance();
+                
+            }else{
+                //close program
+                return ;
+            }
+        }
+    }
+}
